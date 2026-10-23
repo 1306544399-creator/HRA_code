@@ -3,7 +3,7 @@
 
 | 文件 | 知识来源与区别 |
 | --- | --- |
-| [distill_masked.py) | （主实验）原始单层离线蒸馏；支持监督分类、logit、feature、attention 损失，并保存 macro/micro 对应模型 |
+| [train_distill_mi_ma.py](train_distill_mi_ma.py) | （主实验）原始单层离线蒸馏；支持监督分类、logit、feature、attention 损失，并保存 macro/micro 对应模型 |
 | [train_distill_mi_ma_cached_topk.py](train_distill_mi_ma_cached_topk.py) | （level-token的top-k探测实验脚本）从紧凑 FP32 缓存构造层级 token Top-K 目标；`--attention_topk` 支持正整数或 `all` |
 | [train_distill_mi_ma_feature_ablation.py](train_distill_mi_ma_feature_ablation.py) | （feature-mean消融）`level_token` 与 `text_mean` 特征载体消融；分类仍使用层级 token |
 | [train_distill_mi_ma_fullatt.py](train_distill_mi_ma_fullatt.py) | 单个 Transformer 层的完整有效 token 对 attention 蒸馏 |
