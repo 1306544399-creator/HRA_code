@@ -72,15 +72,15 @@ Masked 版本**只改变 Hier 关系损失的有效层级筛选条件**；若开
 
 | 文件 | 用途与区别 |
 | --- | --- |
-| [`WOS/prepare_data.py`](WOS/prepare_data.py) | 读取 WOS 原始数据和 taxonomy，规范化训练/验证/测试样本，生成统一的 `label2id.json` 及 `*_formatted.jsonl` |
-| [`WOS/student_train_wos.py`](WOS/student_train_wos.py) | 单 Token 生成式学生模型 SFT；使用每层一个特殊 Token 的层级标签输出格式 |
-| [`WOS/student_test_wos.py`](WOS/student_test_wos.py) | 独立测试单 Token SFT 学生模型，计算整体与 L1/L2 分层指标 |
-| [`WOS/teacher_train_wos.py`](WOS/teacher_train_wos.py) | 与学生使用一致层级输出结构的教师模型 SFT |
-| [`WOS/teacher_test_wos.py`](WOS/teacher_test_wos.py) | 独立测试单 Token SFT 教师模型 |
-| [`WOS/extract_wos_teacher.py`](WOS/extract_wos_teacher.py) | 离线缓存教师生成部分的隐状态、层级 Token 偏移量及公共词表输出层参数，为后续 KD / Align / Hier 提供教师知识 |
+| [`WOS/prepare_data.py`](WOS/prepare_data.py) | （实验之前对数据集预处理）读取 WOS 原始数据和 taxonomy，规范化训练/验证/测试样本，生成统一的 `label2id.json` 及 `*_formatted.jsonl` |
+| [`WOS/student_train_wos.py`](WOS/student_train_wos.py) | （学生单token训练）单 Token 生成式学生模型 SFT；使用每层一个特殊 Token 的层级标签输出格式 |
+| [`WOS/student_test_wos.py`](WOS/student_test_wos.py) | （学生单token测试）独立测试单 Token SFT 学生模型，计算整体与 L1/L2 分层指标 |
+| [`WOS/teacher_train_wos.py`](WOS/teacher_train_wos.py) | （教师单token训练）与学生使用一致层级输出结构的教师模型 SFT |
+| [`WOS/teacher_test_wos.py`](WOS/teacher_test_wos.py) | （教师单token测试）独立测试单 Token SFT 教师模型 |
+| [`WOS/extract_wos_teacher.py`](WOS/extract_wos_teacher.py) | （离线提取教师特征）离线缓存教师生成部分的隐状态、层级 Token 偏移量及公共词表输出层参数，为后续 KD / Align / Hier 提供教师知识 |
 | [`WOS/distill_wos.py`](WOS/distill_wos.py) | **WOS 单 Token 蒸馏主脚本**；支持 `traditional`、`align`、`hier`、`full` 四种模式及损失权重消融 |
 | [`WOS/distill_test_wos.py`](WOS/distill_test_wos.py) | 独立测试 WOS 单 Token 蒸馏学生模型 |
-| [`WOS/analyze_distill_case.py`](WOS/analyze_distill_case.py) | 比较教师与蒸馏学生的逐样本预测，分析 L1/L2 纠错、错误迁移等情况，并导出多工作表 Excel 报告 |
+| [`WOS/analyze_distill_case.py`](WOS/analyze_distill_case.py) | （单token蒸馏后的case分析）比较教师与蒸馏学生的逐样本预测，分析 L1/L2 纠错、错误迁移等情况，并导出多工作表 Excel 报告 |
 
 ### 3.2 WOS：双 Token 对照实验
 
@@ -88,11 +88,11 @@ Masked 版本**只改变 Hier 关系损失的有效层级筛选条件**；若开
 
 | 文件 | 用途与区别 |
 | --- | --- |
-| [`WOS/student_train_wos_2token.py`](WOS/student_train_wos_2token.py) | WOS 双 Token 学生 SFT；每层设置 START / END 一对特殊 Token |
-| [`WOS/student_test_wos_2token.py`](WOS/student_test_wos_2token.py) | 测试双 Token SFT 学生模型 |
-| [`WOS/teacher_train_wos_2token.py`](WOS/teacher_train_wos_2token.py) | WOS 双 Token 教师 SFT，保持与对应学生分支一致的生成格式 |
-| [`WOS/teacher_test_wos_2token.py`](WOS/teacher_test_wos_2token.py) | 测试双 Token SFT 教师模型 |
-| [`WOS/extract_wos_teacher_2token.py`](WOS/extract_wos_teacher_2token.py) | 独立的双 Token 教师特征/Logits 离线缓存提取实现，记录四个层级 Token 对应的位置和隐状态信息 |
+| [`WOS/student_train_wos_2token.py`](WOS/student_train_wos_2token.py) | （学生双token训练）WOS 双 Token 学生 SFT；每层设置 START / END 一对特殊 Token |
+| [`WOS/student_test_wos_2token.py`](WOS/student_test_wos_2token.py) | （学生双token测试）测试双 Token SFT 学生模型 |
+| [`WOS/teacher_train_wos_2token.py`](WOS/teacher_train_wos_2token.py) | （教师双token训练）WOS 双 Token 教师 SFT，保持与对应学生分支一致的生成格式 |
+| [`WOS/teacher_test_wos_2token.py`](WOS/teacher_test_wos_2token.py) | （教师双token测试）测试双 Token SFT 教师模型 |
+| [`WOS/extract_wos_teacher_2token.py`](WOS/extract_wos_teacher_2token.py) | （教师双token提取特征）独立的双 Token 教师特征/Logits 离线缓存提取实现，记录四个层级 Token 对应的位置和隐状态信息 |
 | [`WOS/distill_wos_2token.py`](WOS/distill_wos_2token.py) | **WOS 双 Token 蒸馏脚本**；内置 `cache` / `train` 两个子命令，支持四种蒸馏模式；Align 对齐四个 Token，Hier 匹配 START 与 END 两条跨层级差分关系 |
 | [`WOS/distill_test_wos_2token.py`](WOS/distill_test_wos_2token.py) | 独立测试双 Token 蒸馏模型，并输出整体、分层及格式有效性等指标 |
 
@@ -102,11 +102,11 @@ Masked 版本**只改变 Hier 关系损失的有效层级筛选条件**；若开
 
 | 文件 | 用途与区别 |
 | --- | --- |
-| [`NYT/prepare_data.py`](NYT/prepare_data.py) | 根据原始 NYT 数据、taxonomy 和标签词表统一标签空间，生成清洗后的 JSONL 与 `label_space.json` |
-| [`NYT/student_train.py`](NYT/student_train.py) | NYT 8 层特殊 Token 的学生模型生成式 SFT |
-| [`NYT/student_test.py`](NYT/student_test.py) | 独立测试学生 SFT 模型，评估整体及各深度的预测结果 |
-| [`NYT/teacher_train.py`](NYT/teacher_train.py) | NYT 教师模型 SFT，生成格式与学生对应 |
-| [`NYT/teacher_test.py`](NYT/teacher_test.py) | 独立测试 NYT 教师模型 |
+| [`NYT/prepare_data.py`](NYT/prepare_data.py) | （实验之前对数据集预处理）根据原始 NYT 数据、taxonomy 和标签词表统一标签空间，生成清洗后的 JSONL 与 `label_space.json` |
+| [`NYT/student_train.py`](NYT/student_train.py) | （学生训练）NYT 8 层特殊 Token 的学生模型生成式 SFT |
+| [`NYT/student_test.py`](NYT/student_test.py) | （学生测试）独立测试学生 SFT 模型，评估整体及各深度的预测结果 |
+| [`NYT/teacher_train.py`](NYT/teacher_train.py) | （教师训练）NYT 教师模型 SFT，生成格式与学生对应 |
+| [`NYT/teacher_test.py`](NYT/teacher_test.py) | （教师测试）独立测试 NYT 教师模型 |
 | [`NYT/extract_nyt_teacher.py`](NYT/extract_nyt_teacher.py) | 提取并缓存教师 Completion 隐状态、D1–D8 层级位置和公共词表输出层参数 |
 | [`NYT/distill_nyt.py`](NYT/distill_nyt.py) | **NYT 全层级离线蒸馏主脚本**；支持 Traditional / Align / Hier / Full，Hier 使用 D1→D2 至 D7→D8 的相邻层级关系 |
 | [`NYT/distill_masked.py`](NYT/distill_masked.py) | **NYT 层级关系 Mask 消融**；仅对相邻两层均有真实标签的样本计算对应 Hier 损失 |
@@ -116,11 +116,11 @@ Masked 版本**只改变 Hier 关系损失的有效层级筛选条件**；若开
 
 | 文件 | 用途与区别 |
 | --- | --- |
-| [`bgc/prepare_data.py`](bgc/prepare_data.py) | 根据 BGC 原始数据与 taxonomy 统一标签空间，保留文本原文，生成格式化 JSONL 与 `label_space.json` |
-| [`bgc/student_train.py`](bgc/student_train.py) | BGC 4 层特殊 Token 的学生模型生成式 SFT |
-| [`bgc/student_test.py`](bgc/student_test.py) | 独立测试 BGC SFT 学生模型，输出整体和分层指标 |
-| [`bgc/teacher_train.py`](bgc/teacher_train.py) | BGC 教师模型 SFT |
-| [`bgc/teacher_test.py`](bgc/teacher_test.py) | 独立测试 BGC 教师模型 |
+| [`bgc/prepare_data.py`](bgc/prepare_data.py) | （实验之前对数据集预处理）根据 BGC 原始数据与 taxonomy 统一标签空间，保留文本原文，生成格式化 JSONL 与 `label_space.json` |
+| [`bgc/student_train.py`](bgc/student_train.py) | （学生训练）BGC 4 层特殊 Token 的学生模型生成式 SFT |
+| [`bgc/student_test.py`](bgc/student_test.py) | （学生测试）独立测试 BGC SFT 学生模型，输出整体和分层指标 |
+| [`bgc/teacher_train.py`](bgc/teacher_train.py) | （教师训练）BGC 教师模型 SFT |
+| [`bgc/teacher_test.py`](bgc/teacher_test.py) | （教师测试）独立测试 BGC 教师模型 |
 | [`bgc/extract_bgc_teacher.py`](bgc/extract_bgc_teacher.py) | 提取教师 Completion 隐状态、D1–D4 相对位置与公共词表输出层参数，供离线蒸馏使用 |
 | [`bgc/distill_bgc.py`](bgc/distill_bgc.py) | **BGC 全层级离线蒸馏主脚本**；支持四种蒸馏模式，Hier 使用 D1→D2 至 D3→D4 的相邻关系 |
 | [`bgc/distill_masked.py`](bgc/distill_masked.py) | **BGC 层级关系 Mask 消融**；仅保留相邻两层均存在真实标签的 Hier 关系 |
