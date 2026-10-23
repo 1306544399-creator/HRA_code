@@ -62,12 +62,23 @@
 | [`bgc/distill_masked.py`](bgc/distill_masked.py) | **BGC 层级关系 Mask 消融**；仅保留相邻两层均存在真实标签的 Hier 关系 |
 | [`bgc/distill_test_bgc.py`](bgc/distill_test_bgc.py) | 通用于 BGC 全层级及 Masked 蒸馏结果的独立测试脚本 |
 
- 设置蒸馏脚本中的 `--model_path`、`--teacher_cache_dir`、数据路径和 `--save_dir`，选择 `--experiment_mode` 与损失权重后训练，比如1 Align + 0.1 Hier就是python WOS/distill_wos.py \
+ 设置蒸馏脚本中的 `--model_path`、`--teacher_cache_dir`、数据路径和 `--save_dir`，选择 `--experiment_mode` 与损失权重后训练
+ 
+ 比如1 Align + 0.1 Hier就是python WOS/distill_wos.py \
     --experiment_mode full \
     --kd_weight 1 \
     --align_weight 1 \
     --hier_weight 0.1 \
-    --save_dir ./runs/wos_align1_hier01。这里默认任务生成损失是1，可以更改traditional align hier的三个loss权重。
+    --save_dir ./runs/wos_align1_hier01。
+
+   只有traditional kd就是 python WOS/distill_wos.py \
+    --experiment_mode traditional \
+    --kd_weight 1 \
+    --align_weight 0 \
+    --hier_weight 0 \
+    --save_dir ./runs/wos_traditional_1
+
+    这里默认任务生成损失是1，可以更改traditional align hier的三个loss权重。
 
 具体实验顺序是先运行 prepare_data.py➡学生教师的训练以及测试➡extract_*_teacher.py➡蒸馏脚本以及测试
 
