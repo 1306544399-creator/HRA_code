@@ -178,7 +178,12 @@ WOS 双 Token 实验使用对应的 `*_2token.py` 脚本；其蒸馏入口 `dist
 2. 修改对应 `prepare_data.py` 中的输入输出路径；WOS 预处理主要使用脚本内路径常量，NYT/BGC 预处理提供命令行路径参数。
 3. 完成教师和学生 SFT，并运行相应测试脚本建立基线。
 4. 使用对应的教师提取脚本生成离线缓存；确保教师、学生、数据、特殊 Token 和 Prompt / Completion 格式一致。
-5. 设置蒸馏脚本中的 `--model_path`、`--teacher_cache_dir`、数据路径和 `--save_dir`，选择 `--experiment_mode` 与损失权重后训练。
+5. 设置蒸馏脚本中的 `--model_path`、`--teacher_cache_dir`、数据路径和 `--save_dir`，选择 `--experiment_mode` 与损失权重后训练，比如1 Align + 0.1 Hier就是python WOS/distill_wos.py \
+    --experiment_mode full \
+    --kd_weight 1 \
+    --align_weight 1 \
+    --hier_weight 0.1 \
+    --save_dir ./runs/wos_align1_hier01。这里默认任务生成损失是1，可以更改traditional align hier的三个loss权重。
 6. 使用**同一数据集、同一 Token 设计**的 `distill_test_*.py` 评估蒸馏结果。
 
 可先通过以下命令查看部分脚本提供的参数：
