@@ -4,7 +4,7 @@
 - **WOS 双 Token 设计**：每层分别使用 START、END 两个特殊 Token，用于对比不同层级表示载体。跨层级关系分别沿 START→START 和 END→END 两条分支建模。
 - **空层处理**：NYT/BGC 的深层样本可能存在空标签 `[]`，但生成结构中的层级 Token 仍保留，以确保层级位置一致。
 
-### 3.1 WOS：单 Token 主实验
+### 1 WOS：单 Token 主实验
 
 | 文件 | 用途与区别 |
 | --- | --- |
@@ -18,7 +18,7 @@
 | [`WOS/distill_test_wos.py`](WOS/distill_test_wos.py) | 独立测试 WOS 单 Token 蒸馏学生模型 |
 | [`WOS/analyze_distill_case.py`](WOS/analyze_distill_case.py) | （单token蒸馏后的case分析）比较教师与蒸馏学生的逐样本预测，分析 L1/L2 纠错、错误迁移等情况，并导出多工作表 Excel 报告 |
 
-### 3.2 WOS：双 Token 对照实验
+### 2 WOS：双 Token 对照实验
 
 双 Token 分支在每层标签前后分别放置 START / END 层级 Token，以分析层级表示选择以及跨层级关系构建方式对蒸馏效果的影响。该分支与单 Token 分支的训练、提取、测试脚本应成套使用。
 
@@ -34,7 +34,7 @@
 
 > 双 Token 分支中，`distill_wos_2token.py` 自带缓存构建阶段；`extract_wos_teacher_2token.py` 是另一个独立提取入口。实际运行时应检查所选缓存格式与蒸馏训练入口的配置是否匹配，不要混用单 Token 和双 Token 缓存。
 
-### 3.3 NYT：8 层层次文本分类
+### 3 NYT：8 层层次文本分类
 
 | 文件 | 用途与区别 |
 | --- | --- |
@@ -48,7 +48,7 @@
 | [`NYT/distill_masked.py`](NYT/distill_masked.py) | **NYT 层级关系 Mask 消融**；仅对相邻两层均有真实标签的样本计算对应 Hier 损失 |
 | [`NYT/distill_test_nyt.py`](NYT/distill_test_nyt.py) | 通用于 NYT 全层级及 Masked 蒸馏结果的独立测试脚本 |
 
-### 3.4 BGC：4 层层次文本分类
+### 4 BGC：4 层层次文本分类
 
 | 文件 | 用途与区别 |
 | --- | --- |
@@ -71,7 +71,7 @@
 
 具体实验顺序是先运行 prepare_data.py➡学生教师的训练以及测试➡extract_*_teacher.py➡蒸馏脚本以及测试
 
-
+————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
 
 
